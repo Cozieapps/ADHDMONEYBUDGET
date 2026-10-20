@@ -1,0 +1,12 @@
+{
+  "name": "Sori Bloom",
+  "short_name": "Sori",
+  "description": "A gentler way to be with your money.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf8f3",
+  "theme_color": "#275649",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

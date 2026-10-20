@@ -1,0 +1,45 @@
+name: Deploy Sori Bloom
+on:
+  workflow_dispatch:
+    inputs:
+      enable_cloud_ai:
+        type: boolean
+        description: 'Enable Workers AI (confirm account is Workers Free and review docs/AI.md)'
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: deploy-sori-bloom
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@11
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --audit-level=high
+      - run: npx playwright install --with-deps chromium
+      - run: npm -w apps/web run test:e2e -- --workers=2
+      - id: deploy
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SORI_PASSPHRASE: ${{ secrets.SORI_PASSPHRASE }}
+          SORI_PAGES_PROJECT: ${{ vars.SORI_PAGES_PROJECT }}
+          SORI_API_URL: ${{ vars.SORI_API_URL }}
+          SORI_ENABLE_CLOUD_AI: ${{ inputs.enable_cloud_ai }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deployed-web-build
+          path: apps/web/dist

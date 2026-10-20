@@ -1,0 +1,105 @@
+{
+  "errors": [],
+  "all": [
+    {
+      "viewport": "tablet",
+      "screen": "setup",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "today",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "spending",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "calendar",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "goals",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "debt",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "forecast",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "insights",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "coach",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "screen": "settings",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "setup",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "today",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "spending",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "calendar",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "goals",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "debt",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "forecast",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "insights",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "coach",
+      "violations": []
+    },
+    {
+      "viewport": "phone",
+      "screen": "settings",
+      "violations": []
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "artifact": "sori-bloom-debug.apk",
+  "bytes": 10144314,
+  "applicationId": "app.sori.bloom",
+  "applicationName": "Sori Bloom",
+  "versionCode": 1,
+  "versionName": "0.1.0",
+  "minSdk": 29,
+  "targetSdk": 36,
+  "signatureVerified": true,
+  "signatureScheme": "v2",
+  "jdk": "Temurin 21.0.12.1+1",
+  "gradle": "8.14.3",
+  "agp": "8.13.0",
+  "physicalDeviceTested": false,
+  "cloudflareDeploymentAuthenticated": false,
+  "verifiedWebScript": "index-B1yjBTDW.js",
+  "verifiedWebStylesheet": "index-DYIcz0xh.css"
+}
