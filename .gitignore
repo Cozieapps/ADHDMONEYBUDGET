@@ -23,3 +23,5 @@ artifacts/*.apk
 artifacts/*.apk.sha256
 
 artifacts/*.zip
+
+release-assets/
