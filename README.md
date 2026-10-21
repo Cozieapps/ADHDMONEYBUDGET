@@ -6,7 +6,9 @@ Sori Bloom is a distinct app in `Cozieapps/ADHDMONEYBUDGET`. It leaves the origi
 
 ## Download for Android
 
-[Download the signed Sori Bloom APK](https://github.com/Cozieapps/ADHDMONEYBUDGET/raw/refs/heads/main/downloads/sori-bloom-debug.apk) · [Checksum and installation](downloads/README.md)
+[Published personal preview release](https://github.com/Cozieapps/ADHDMONEYBUDGET/releases/tag/v0.1.0-bloom.2)
+
+[Download the signed Sori Bloom APK](https://github.com/Cozieapps/ADHDMONEYBUDGET/releases/download/v0.1.0-bloom.2/sori-bloom-debug.apk) · [Checksum and installation](downloads/README.md)
 
 This personal preview supports Android 10+ and works offline. Cloud sync is optional.
 

@@ -31,3 +31,8 @@ Consumer ChatGPT/Claude subscriptions are not API credits. The default app uses 
 ## Updates and rollback
 
 Run verification before deploying updates. Rerunning the deployment script reuses the named resources and applies pending migrations without clearing data. Pages keeps previous deployments, which can be promoted in its dashboard; Worker versions can be rolled back in Cloudflare's dashboard. Schema rollback must be considered separately; export data before database changes. Updating a deployed API does not update an APK: rebuild and install the Android app for interface changes.
+
+
+## Current deployment prerequisite
+
+The first GitHub deployment preflight found no available repository bindings for `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` or `SORI_PASSPHRASE`. Add or grant this repository access to those existing credentials in [GitHub Actions secrets](https://github.com/Cozieapps/ADHDMONEYBUDGET/settings/secrets/actions). Then run [Deploy Sori Bloom](https://github.com/Cozieapps/ADHDMONEYBUDGET/actions/workflows/deploy.yml) from `main`, leaving cloud AI off unless you have reviewed the free-account limits. The workflow verifies the app before creating resources. The published APK is already available independently of Cloudflare deployment.

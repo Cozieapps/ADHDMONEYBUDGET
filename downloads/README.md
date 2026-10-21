@@ -1,6 +1,6 @@
 # Install Sori Bloom
 
-Download [sori-bloom-debug.apk](https://github.com/Cozieapps/ADHDMONEYBUDGET/raw/refs/heads/main/downloads/sori-bloom-debug.apk) on your Android tablet, then open the downloaded file. Android may ask you to allow installation from your browser or files app.
+Download [sori-bloom-debug.apk](https://github.com/Cozieapps/ADHDMONEYBUDGET/releases/download/v0.1.0-bloom.2/sori-bloom-debug.apk) on your Android tablet, then open the downloaded file. Android may ask you to allow installation from your browser or files app.
 
 This is the compiled, signature-verified personal preview build of Sori Bloom, version 0.1.0, package `app.sori.bloom`. It supports Android 10 and newer and can coexist with the original Sori app.
 

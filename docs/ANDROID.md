@@ -2,9 +2,13 @@
 
 Sori Bloom is a real installable Android application built with Capacitor: the shared React interface runs in Android's WebView, with native notification, haptic, file and sharing integrations. It is not a Kotlin/Compose rewrite. It supports Android 10/API 29 and newer. Application ID `app.sori.bloom` allows it to coexist with the original `app.sori.budget` app.
 
-## Download from GitHub Actions
+## Download the published APK
 
-After this repository is pushed, run **Verify and build** in Actions. Once its verification and Android jobs pass, download the **sori-bloom-debug-apk** artifact, unzip it and open `sori-bloom-debug.apk` on the tablet. Android may ask you to allow installation from your browser/files app. This debug build is intended for personal testing. Keep your release keystore safe before using release builds for long-term updates.
+Open [Sori Bloom’s personal preview release](https://github.com/Cozieapps/ADHDMONEYBUDGET/releases/tag/v0.1.0-bloom.2) and download `sori-bloom-debug.apk` on your tablet. The release contains the exact compiled and signature-verified package, plus its SHA-256 checksum. Open the downloaded APK to install it.
+
+## Build with GitHub Actions
+
+Run **Verify and build** in Actions to compile an additional test APK. Once its verification and Android jobs pass, download the **sori-bloom-debug-apk** artifact, unzip it and open `sori-bloom-debug.apk` on the tablet. Android may ask you to allow installation from your browser/files app. This debug build is intended for personal testing. Keep your release keystore safe before using release builds for long-term updates.
 
 ## Build locally
 
