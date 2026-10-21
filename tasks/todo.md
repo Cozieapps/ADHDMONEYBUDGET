@@ -13,7 +13,7 @@
 
 ## External release prerequisites
 
-- [ ] Supply deployment credentials securely and deploy to the owner's Cloudflare Free account.
+- [x] Deploy to the owner’s configured Cloudflare account; verify public app, database, sign-in and read-only sync.
 - [ ] Exercise live cloud AI/consumer MCP with that account.
 - [ ] Install APK on the physical tablet and review notification/share/haptic behavior.
 

@@ -6,7 +6,7 @@ Sori Bloom lives in `Cozieapps/ADHDMONEYBUDGET`. The original `ADHDBUDGET` and `
 
 - Node 24.19.0, npm 11.9.0; the repository supports Node22+.
 - Frozen installation, local D1 migrations, production web build, strict TypeScript checks and ESLint passed. The combined reusable installation script was executed successfully for both app repositories.
-- **170 unit/integration/security tests passed**: 112 core, 23 web/platform, 35 Worker. Tests cover integer-cent arithmetic, recurring dates, forecasting, goal/debt operations, AI/auth request caps, record validation, preview isolation, sync failures and backups.
+- **170 application unit/integration/security tests passed**: 112 core, 23 web/platform, 35 Worker. Tests cover integer-cent arithmetic, recurring dates, forecasting, goal/debt operations, AI/auth request caps, record validation, preview isolation, sync failures and backups.
 - **18 Playwright tests passed** across phone and tablet, with no skips, flaky passes or unexpected failures. Critical flows include onboarding, exact daily-number updates, save/undo/remove/reload, envelopes, paid bills, goals, pause list, debt, forecast scenarios, local companion, backup restore/rejection and privacy preferences.
 - **20 axe screen scans passed** with zero violations in the selected checks and zero uncaught page errors. Layouts were checked at 320, 768, 1024 and 1440px without horizontal overflow. Closed mobile navigation is excluded from keyboard focus, dialogs support Escape, and the open drawer traps focus.
 - Real service-worker offline reload and expense logging passed on phone and tablet. Only public app assets are cached; API responses are excluded.
@@ -22,9 +22,11 @@ Sori Bloom lives in `Cozieapps/ADHDMONEYBUDGET`. The original `ADHDBUDGET` and `
 - `artifacts/browser-results.json` and `browser-audit.json`:machine-readable final browser results.
 - `artifacts/npm-audit.json`:zero high/critical findings; three moderate findings in the Capacitor CLI’s transitive iOS/Xcode/uuid toolchain, with no upstream fix reported. They are not browser runtime dependencies. No verification was disabled.
 
-## What still requires an external account or device
+## Published deployment
 
-No public Cloudflare URL has been deployed. The machine has no authenticated Cloudflare account. Deployment prerequisites are saved in environment settings: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `SORI_PASSPHRASE`. The draft includes `api.cloudflare.com`; enter credentials securely, review/save settings and publish the environment. See [DEPLOY.md](DEPLOY.md) for scoped permissions and the prepared deployment workflow. Saving configuration does not run deployment.
+The app is live at https://sori-bloom.pages.dev, with sync at https://sori-bloom-api.shopwithcozie.workers.dev. [Deployment run 39537783733](https://github.com/Cozieapps/ADHDMONEYBUDGET/actions/runs/39537783733) passed real production database health, passphrase authentication, read-only sync, public HTML and the compiled frontend’s server-address checks. Seven additional deployment-verifier tests passed, bringing the local total to 177.
+
+## Optional cloud AI and physical device checks
 
 Generative Workers AI and a consumer Claude/ChatGPT connector session have not been exercised against a live account. AI is off by default; local guidance and calculations require no paid API. The opt-in AI endpoint has a global daily cap and small fixed model/output limit, but an app cannot enforce account-wide Cloudflare billing controls. Use the Workers Free plan and do not enable paid upgrades.
 

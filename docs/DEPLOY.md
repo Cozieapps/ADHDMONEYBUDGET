@@ -1,6 +1,6 @@
 # Deploy on Cloudflare's free plan
 
-There are two distinct services: a static web app on **Pages**, and a **Worker** for optional personal sync, MCP and opt-in AI. You can use the app locally with no account, bank connection or AI key. Deployment requires your own Cloudflare authorization. This development machine currently has no Cloudflare authentication, so no production URL has been created or verified.
+There are two distinct services: a static web app on **Pages**, and a **Worker** for optional personal sync, MCP and opt-in AI. You can use the app locally with no account, bank connection or AI key. Deployment requires your own Cloudflare authorization. Deployment uses the repository’s securely configured GitHub Actions secrets. Production deployment and live read-only checks have passed.
 
 ## Recommended full deployment
 
@@ -33,6 +33,13 @@ Consumer ChatGPT/Claude subscriptions are not API credits. The default app uses 
 Run verification before deploying updates. Rerunning the deployment script reuses the named resources and applies pending migrations without clearing data. Pages keeps previous deployments, which can be promoted in its dashboard; Worker versions can be rolled back in Cloudflare's dashboard. Schema rollback must be considered separately; export data before database changes. Updating a deployed API does not update an APK: rebuild and install the Android app for interface changes.
 
 
-## Current deployment prerequisite
+## Current published deployment
 
-The first GitHub deployment preflight found no available repository bindings for `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` or `SORI_PASSPHRASE`. Add or grant this repository access to those existing credentials in [GitHub Actions secrets](https://github.com/Cozieapps/ADHDMONEYBUDGET/settings/secrets/actions). Then run [Deploy Sori Bloom](https://github.com/Cozieapps/ADHDMONEYBUDGET/actions/workflows/deploy.yml) from `main`, leaving cloud AI off unless you have reviewed the free-account limits. The workflow verifies the app before creating resources. The published APK is already available independently of Cloudflare deployment.
+- App: https://sori-bloom.pages.dev
+- Sync server: https://sori-bloom-api.shopwithcozie.workers.dev
+- Claude MCP connector: https://sori-bloom-api.shopwithcozie.workers.dev/mcp
+- [Verified deployment run](https://github.com/Cozieapps/ADHDMONEYBUDGET/actions/runs/39537783733)
+
+The deployment verifies database health, authenticates with the configured passphrase, performs a read-only sync, checks the public page and confirms its JavaScript bundle uses the deployed server. No financial records are written by these checks. Passphrases, temporary device tokens and pulled records are never printed or persisted by the verifier.
+
+Cloud AI is off by default. To redeploy, run [Deploy Sori Bloom](https://github.com/Cozieapps/ADHDMONEYBUDGET/actions/workflows/deploy.yml) from main. The three deployment credentials are stored in GitHub Actions secrets, rather than embedded in the app. The Android APK can connect to the same server through Settings.

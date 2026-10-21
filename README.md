@@ -4,6 +4,12 @@ A gentler way to be with your money. Built for adults with ADHD: one clear daily
 
 Sori Bloom is a distinct app in `Cozieapps/ADHDMONEYBUDGET`. It leaves the original Sori in `ADHDBUDGET` intact and reuses its tested money engine and sync protocol. The new interface, workflows, Android identity and Cloudflare resource names are separate.
 
+## Open Sori Bloom
+
+[Open the live app](https://sori-bloom.pages.dev). Production database health, device sign-in, read-only sync and the web app’s server configuration have been verified.
+
+For Android sync, open Settings and use `https://sori-bloom-api.shopwithcozie.workers.dev` as the server address, then enter your Sori passphrase and connect. The existing APK works offline before you connect.
+
 ## Download for Android
 
 [Published personal preview release](https://github.com/Cozieapps/ADHDMONEYBUDGET/releases/tag/v0.1.0-bloom.2)
@@ -89,4 +95,4 @@ Start with [SPEC.md](SPEC.md), [CAPABILITIES.md](CAPABILITIES.md) and [tasks/pla
 
 ## Review this build
 
-The compiled Android APK, static Pages ZIP, screenshots and test reports are in `artifacts/`. [Verification and remaining prerequisites](docs/VERIFICATION.md) records exactly what was tested. The signed APK is also included in `downloads/` for direct GitHub download. No production Cloudflare resources have been created yet. Repository files, local artifacts and saved environment setup are ready for review.
+The compiled Android APK, static Pages ZIP, screenshots and test reports are in `artifacts/`. [Verification and remaining prerequisites](docs/VERIFICATION.md) records exactly what was tested. The signed APK is also included in `downloads/` for direct GitHub download. The app is deployed to Cloudflare Pages with its own Worker, D1 database and OAuth KV namespace. Repository files, local artifacts and saved environment setup are ready for review.
