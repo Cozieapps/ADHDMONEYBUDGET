@@ -4,6 +4,12 @@ A gentler way to be with your money. Built for adults with ADHD: one clear daily
 
 Sori Bloom is a distinct app in `Cozieapps/ADHDMONEYBUDGET`. It leaves the original Sori in `ADHDBUDGET` intact and reuses its tested money engine and sync protocol. The new interface, workflows, Android identity and Cloudflare resource names are separate.
 
+## Download for Android
+
+[Download the signed Sori Bloom APK](https://github.com/Cozieapps/ADHDMONEYBUDGET/raw/refs/heads/main/downloads/sori-bloom-debug.apk) · [Checksum and installation](downloads/README.md)
+
+This personal preview supports Android 10+ and works offline. Cloud sync is optional.
+
 ## What it does
 
 - **Today:** understandable safe-to-spend maths, upcoming commitments and a daily check-in.
@@ -81,4 +87,4 @@ Start with [SPEC.md](SPEC.md), [CAPABILITIES.md](CAPABILITIES.md) and [tasks/pla
 
 ## Review this build
 
-The compiled Android APK, static Pages ZIP, screenshots and test reports are in `artifacts/`. [Verification and remaining prerequisites](docs/VERIFICATION.md) records exactly what was tested. Source changes have not been pushed to GitHub and no production Cloudflare resources were created. Repository files, local artifacts and saved environment setup are ready for review.
+The compiled Android APK, static Pages ZIP, screenshots and test reports are in `artifacts/`. [Verification and remaining prerequisites](docs/VERIFICATION.md) records exactly what was tested. The signed APK is also included in `downloads/` for direct GitHub download. No production Cloudflare resources have been created yet. Repository files, local artifacts and saved environment setup are ready for review.
