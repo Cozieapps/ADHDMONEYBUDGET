@@ -1,0 +1,106 @@
+name: Publish personal preview
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing preview tag to publish'
+        type: string
+        required: true
+        default: v0.1.0-bloom.1
+
+permissions:
+  contents: read
+
+concurrency:
+  group: personal-preview-${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Verify source and existing signed APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - name: Validate requested tag
+        id: tag
+        env:
+          RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-bloom\.[0-9]+$ ]]; then
+            echo 'Use a personal-preview tag such as v0.1.0-bloom.1.' >&2
+            exit 1
+          fi
+          echo "tag=$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ steps.tag.outputs.tag }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - run: npm install -g npm@11
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --audit-level=high
+      - name: Verify the exact already-built personal APK
+        run: |
+          test -f downloads/sori-bloom-debug.apk
+          test -f downloads/sori-bloom-debug.apk.sha256
+          (cd downloads && sha256sum -c sori-bloom-debug.apk.sha256)
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose downloads/sori-bloom-debug.apk
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging downloads/sori-bloom-debug.apk > "$RUNNER_TEMP/apk-metadata.txt"
+          grep -F "package: name='app.sori.bloom'" "$RUNNER_TEMP/apk-metadata.txt"
+          grep -F "application-label:'Sori Bloom'" "$RUNNER_TEMP/apk-metadata.txt"
+          # Preserve the existing signing identity; never generate a new debug key for this release.
+          mkdir -p release-assets
+          cp downloads/sori-bloom-debug.apk downloads/sori-bloom-debug.apk.sha256 release-assets/
+      - name: Package the web build
+        run: |
+          (cd apps/web/dist && zip -X -q -r ../../../release-assets/sori-bloom-web.zip .)
+          (cd release-assets && sha256sum sori-bloom-web.zip > sori-bloom-web.zip.sha256)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: personal-preview-assets
+          path: release-assets/*
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Publish downloadable preview assets
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ needs.prepare.outputs.tag }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: personal-preview-assets
+          path: release-assets
+      - name: Publish without replacing existing assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: node scripts/publish-preview.mjs '${{ needs.prepare.outputs.tag }}' --assets release-assets
