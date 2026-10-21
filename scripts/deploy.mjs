@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { appendFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { verifyDeployment } from './verify-deployment.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const workerDir = join(root, 'apps/worker');
@@ -71,6 +72,22 @@ if (!projects.some((entry) => entry.name === pagesProject || entry['Project Name
 }
 wrangler(['pages', 'deploy', 'dist', '--project-name', pagesProject, '--branch', 'main', '--commit-dirty=true'], { cwd: webDir });
 const webUrl = `https://${pagesProject}.pages.dev`;
+let verified = false;
+for (let attempt = 0; attempt < 4; attempt++) {
+  try {
+    await verifyDeployment({ apiUrl, webUrl, passphrase: process.env.SORI_PASSPHRASE });
+    verified = true;
+    break;
+  } catch (error) {
+    if (attempt === 3) throw error;
+    console.log('Waiting for the new deployment to become ready…');
+    await new Promise(resolve => setTimeout(resolve, 3_000));
+  }
+}
+if (!verified) throw new Error('Deployment readiness could not be confirmed.');
+if (process.env.GITHUB_ACTIONS === 'true') {
+  console.log(`::notice title=Sori Bloom verified::App: ${webUrl} · Sync API: ${apiUrl} · Database, sign-in and read-only sync passed.`);
+}
 console.log(`Sori Bloom deployed.\nWeb: ${webUrl}\nAPI: ${apiUrl}\nMCP connector: ${apiUrl}/mcp`);
 if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `api_url=${apiUrl}\nweb_url=${webUrl}\n`);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Sori Bloom: ${webUrl}\n\nAPI: ${apiUrl}\n\nMCP connector: ${apiUrl}/mcp\n`);

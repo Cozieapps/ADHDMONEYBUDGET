@@ -11,13 +11,14 @@
     "dev": "npm -w apps/web run dev",
     "dev:worker": "npm -w apps/worker run dev",
     "build": "npm -w apps/web run build",
-    "test": "npm run test --workspaces --if-present",
+    "test": "npm run test:deploy && npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "android:apk": "node scripts/android-build.mjs",
     "android:release": "node scripts/android-build.mjs --release",
     "test:e2e": "npm -w apps/web run test:e2e",
-    "deploy": "node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs",
+    "test:deploy": "node --test scripts/verify-deployment.test.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
