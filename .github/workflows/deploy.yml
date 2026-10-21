@@ -1,5 +1,7 @@
 name: Deploy Sori Bloom
 on:
+  push:
+    tags: ['deploy-bloom-*']
   workflow_dispatch:
     inputs:
       enable_cloud_ai:
@@ -16,6 +18,20 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
+      - name: Check deployment credentials without exposing values
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SORI_PASSPHRASE: ${{ secrets.SORI_PASSPHRASE }}
+        run: |
+          missing=0
+          for required in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID SORI_PASSPHRASE; do
+            if [[ -z "${!required}" ]]; then
+              echo "::error::Missing GitHub Actions secret: $required. Configure it securely in repository settings."
+              missing=1
+            fi
+          done
+          exit "$missing"
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
